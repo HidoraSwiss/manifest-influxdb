@@ -1,0 +1,68 @@
+type: install
+version: 1.4
+name: InfluxDB
+categories: ["apps/dev-and-admin-tools"]
+displayName: InfluxDB
+homepage: https://www.influxdata.com/
+logo: https://raw.githubusercontent.com/influxdata/branding/master/source/static/img/logo-usage/logo-symbol-white.svg
+description: Scalable datastore for metrics, events, and real-time analytics 
+ssl: true
+
+nodes:
+  - image: centos:7
+    displayName: InfluxDB + Grafana
+    count: 1
+    cloudlets: 8
+    nodeGroup: cp
+    env:
+      DOCKER_EXPOSED_PORT: 8080
+    volumes:
+      - /etc/grafana
+      - /etc/influxdb
+      - /etc/kapacitor
+      
+onInstall:
+
+  - log: Install and configure InfluxDB
+  - cmd[cp]:
+    - yum install -y wget
+    - wget https://dl.influxdata.com/influxdb/releases/influxdb-1.5.1.x86_64.rpm
+    - yum localinstall influxdb-1.5.1.x86_64.rpm
+    - systemctl enable influxdb
+    - systemctl start influxdb
+    
+  - log: Install Chronograf
+  - cmd[cp]:
+     - wget https://dl.influxdata.com/chronograf/releases/chronograf-1.4.2.3.x86_64.rpm
+     - yum localinstall chronograf-1.4.2.3.x86_64.rpm
+     - systemctl enable chronograf
+     - systemctl start chronograf
+     
+  - log: Install Kapacitor
+  - cmd[cp]:
+     - wget https://dl.influxdata.com/kapacitor/releases/kapacitor-1.4.1.x86_64.rpm
+     - yum localinstall kapacitor-1.4.1.x86_64.rpm
+     - systemctl enable kapacitor
+     - systemctl start kapacitor
+  
+  - log: Install Grafana
+  - cmd[cp]:
+     - yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.0.3-1.x86_64.rpm
+     - systemctl enable grafana-server.service
+     - sed -i "s/;http_port = 3000/http_port = 8080/g" /etc/grafana/grafana.ini
+     - systemctl start grafana-server
+     
+  - log: Clean
+  - cmd[cp]:
+     - rm *.rpm
+     
+  - log: Init InfluxDB
+    cmd[cp]:
+      - influx -execute 'CREATE DATABASE monitoring'
+      - influx -execute 'ALTER RETENTION POLICY autogen ON monitoring DURATION 12w'
+
+success: |
+  InfluxDB has been installed on [https://${env.domain}](https://${env.domain}).
+  
+  Use this IP to configure a new Telegraf installation: `${nodes.cp.first.intIP}`.
+
