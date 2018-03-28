@@ -59,7 +59,7 @@ onInstall:
   - cmd[${settings.NODE_TYPE}]:
      # Postgresql
      - service postgresql status
-     - test $? -eq '0' && wget ${GITHUB_REPO}/scripts/set-postgres.sh -O /tmp/set-postgres.sh && chmod +x /tmp/set-postgres.sh && /tmp/set-postgres.sh ${globals.DB_TELEGRAF_PASS} || true
+     - test $? -eq '0' && wget ${globals.GITHUB_REPO}/scripts/set-postgres.sh -O /tmp/set-postgres.sh && chmod +x /tmp/set-postgres.sh && /tmp/set-postgres.sh ${globals.DB_TELEGRAF_PASS} || true
      ## MySQL (WIP)
      #- service mysql status
      #- test $? -eq '0' && echo "Get MySQL config" && wget${GITHUB_REPO}/config/telegraf-mysql.conf -O /etc/telegraf/telegraf.d/mysql.conf || true
