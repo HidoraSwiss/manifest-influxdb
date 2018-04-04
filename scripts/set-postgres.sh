@@ -11,6 +11,7 @@ service postgresql restart
 echo "create role telegraf with login password '$1' NOSUPERUSER NOCREATEDB NOCREATEROLE;"
 psql -h 127.0.0.1 -U postgres -c "create role telegraf with login password '$1' NOSUPERUSER NOCREATEDB NOCREATEROLE;"
 echo "host  all   telegraf  127.0.0.1/32  password" > pg_hba.conf
+echo "host  all   telegraf  ::1/128  password" >> pg_hba.conf
 cat pg_hba.conf.telegraf >> pg_hba.conf
 rm pg_hba.conf.telegraf
 service postgresql restart
