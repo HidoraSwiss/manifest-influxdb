@@ -4,7 +4,7 @@ name: Telegraf add-on
 categories: ["apps/dev-and-admin-tools"]
 displayName: Telegraf Add-on
 homepage: https://docs.influxdata.com/telegraf
-logo: https://raw.githubusercontent.com/influxdata/branding/master/source/static/img/logo-variations/telegraf.svg
+logo: https://raw.githubusercontent.com/HidoraSwiss/manifest-influxdb/master/images/telegraf.png
 description: |
  Install telegraf in a node to send metrics to InfluxDB
  

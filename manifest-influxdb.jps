@@ -4,7 +4,7 @@ name: InfluxDB
 categories: ["apps/dev-and-admin-tools"]
 displayName: InfluxDB
 homepage: https://www.influxdata.com/
-logo: https://raw.githubusercontent.com/influxdata/branding/master/source/static/img/logo-usage/logo-symbol-white.svg
+logo: https://raw.githubusercontent.com/HidoraSwiss/manifest-influxdb/master/images/influxdb.png
 description: Scalable datastore for metrics, events, and real-time analytics 
 ssl: true
 
