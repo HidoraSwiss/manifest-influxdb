@@ -53,7 +53,6 @@ onInstall:
      - mkdir -p /etc/grafana/dashboards
      - wget https://raw.githubusercontent.com/HidoraSwiss/manifest-influxdb/master/config/grafana/datasources.yaml -O /etc/grafana/provisioning/datasources/monitoring.yaml
      - wget https://raw.githubusercontent.com/HidoraSwiss/manifest-influxdb/master/config/grafana/dashboards.yaml -O /etc/grafana/provisioning/dashboards/dashboards.yaml
-     - wget https://raw.githubusercontent.com/HidoraSwiss/manifest-influxdb/master/config/grafana/dashboards.json -O /etc/grafana/dashboards/dashboards.json
      - systemctl start grafana-server
      
   - log: Clean
