@@ -1,11 +1,15 @@
 type: update
 version: 1.4
-name: Telegraf Add-on
+name: Telegraf add-on
 categories: ["apps/dev-and-admin-tools"]
 displayName: Telegraf Add-on
 homepage: https://docs.influxdata.com/telegraf
-logo: none
-description: Install telegraf in a node to send metrics to InfluxDB
+logo: https://raw.githubusercontent.com/influxdata/branding/master/source/static/img/logo-variations/telegraf.svg
+description: |
+ Install telegraf in a node to send metrics to InfluxDB
+ 
+ Note: Telegraf plugins for *postgres* and *mysql* are automatically set.
+ You don't need to add it in filters list.
 
 globals:
   TELEGRAF_PACKAGE: https://dl.influxdata.com/telegraf/releases/telegraf-1.5.3-1.x86_64.rpm
@@ -32,9 +36,8 @@ settings:
       storage: storage
       vps: vps
       build: build
-  - type: displayfield
-    caption: Telegraf plugins for *postgres* and *mysql* are automatically set
 #  - type: checkboxlist
+#    name: FILTERS
 #    caption: Service(s) to monitor
 #    default: system
 #    values:
