@@ -36,6 +36,7 @@ settings:
       storage: storage
       vps: vps
       build: build
+      centos7: centos7
 #  - type: checkboxlist
 #    name: FILTERS
 #    caption: Service(s) to monitor
