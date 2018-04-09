@@ -27,6 +27,7 @@ settings:
     name: NODE_TYPE
     caption: Node type
     default: cp
+    editable: true
     values:
       bl: bl
       cp: cp
