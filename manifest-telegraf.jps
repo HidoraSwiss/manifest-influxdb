@@ -50,7 +50,11 @@ settings:
     name: TEMP_FILTERS
     caption: Filters
     required: true
-    default: system:cpu:disk:diskio:kernel:mem:processes:swap
+    default: system:cpu:disk:diskio:kernel:mem:processes:swap:net
+  - type: string
+    name: TAG
+    caption: Tag
+    required: true
 
 onInstall:
   - log: Install Telegraf
@@ -67,15 +71,16 @@ onInstall:
      - test $? -eq '0' && wget ${globals.GITHUB_REPO}/scripts/set-postgres.sh -O /tmp/set-postgres.sh && chmod +x /tmp/set-postgres.sh && /tmp/set-postgres.sh ${globals.DB_TELEGRAF_PASS} || true
      ## MySQL (WIP)
      #- service mysql status
-     #- test $? -eq '0' && echo "Get MySQL config" && wget${GITHUB_REPO}/config/telegraf-mysql.conf -O /etc/telegraf/telegraf.d/mysql.conf || true
+     #- test $? -eq '0' && echo "Get MySQL config" && wget ${GITHUB_REPO}/config/telegraf-mysql.conf -O /etc/telegraf/telegraf.d/mysql.conf || true
     user: root
     
   - log: Configure Telegraf
     cmd[${settings.NODE_TYPE}]:
      - telegraf --input-filter ${settings.TEMP_FILTERS} --output-filter influxdb config > /etc/telegraf/telegraf.conf
      - sed -i "s/127.0.0.1:8086/${settings.INFLUXDB_IP}:8086/g" /etc/telegraf/telegraf.conf
-     - sed -i 's/# dc = "us-east-1"/dc = "${settings.NODE_TYPE}"/g' /etc/telegraf/telegraf.conf
-     - sed -i 's/database = "telegraf"/database = "monitoring"/g' /etc/telegraf/telegraf.conf
+     - sed -i 's/# dc = "us-east-1"/dc = "${settings.TAG}"/g' /etc/telegraf/telegraf.conf
+     - sed -i 's/database = "telegraf"/database = "telegraf"/g' /etc/telegraf/telegraf.conf
+     - sed -i 's/logfile = ""/logfile = "/var/log/telegraf/telegraf.log"/g' /etc/telegraf/telegraf.conf
     user: root
   
   - log: Start Telegraf
