@@ -80,7 +80,6 @@ onInstall:
      - sed -i "s/127.0.0.1:8086/${settings.INFLUXDB_IP}:8086/g" /etc/telegraf/telegraf.conf
      - sed -i 's/# dc = "us-east-1"/dc = "${settings.TAG}"/g' /etc/telegraf/telegraf.conf
      - sed -i 's/database = "telegraf"/database = "telegraf"/g' /etc/telegraf/telegraf.conf
-     - sed -i 's/logfile = ""/logfile = "/var/log/telegraf/telegraf.log"/g' /etc/telegraf/telegraf.conf
     user: root
   
   - log: Start Telegraf
